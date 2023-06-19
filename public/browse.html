@@ -1,15 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Browse Food Items</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const foodItemsList = document.getElementById('foodItemsList');
+
+    const updateFoodItemsList = (data) => {
+      foodItemsList.innerHTML = '';
+      data.forEach(foodItem => {
+        const itemElement = document.createElement('li');
+        itemElement.innerHTML = `<b>Title:</b> ${foodItem.title}<br><b>Description:</b> ${foodItem.description}<br><b>Quantity:</b> ${foodItem.quantity}`;
+        foodItemsList.appendChild(itemElement);
+      });
+    };
+
+    // Handle socket event for new food item
+    socket.on('newFoodItem', (newFoodItem) => {
+      fetch('/food-items')
+        .then(response => response.json())
+        .then(data => {
+          updateFoodItemsList(data);
+        });
+    });
+
+    fetch('/food-items')
+      .then(response => response.json())
+      .then(data => {
+        updateFoodItemsList(data);
+      });
+  });
+</script>
 </head>
 <body>
   <h1>Browse Food Items</h1>
   <ul>
-    <!-- Use server-side templating or JavaScript to dynamically generate the list of food items -->
     <li>
       <div class="container">
         <div class="center">
@@ -17,6 +46,11 @@
       <b>Description:</b> Item 1 description<br>
       <b>Quantity:</b> 10<br>
       <form action="/request/item1" method="POST">
+<<<<<<< HEAD
+=======
+        <input type="text" name="name" placeholder="Your Name" required>
+        <button type="submit">Request</button>
+>>>>>>> 21a39c91022196cc5b89da8e1c6ab6bfdd36508b
       </form>
     </li>
     <li>
@@ -26,9 +60,14 @@
       <b>Description:</b> Item 2 description<br>
       <b>Quantity:</b> 5<br>
       <form action="/request/item2" method="POST">
+<<<<<<< HEAD
         <input type="text" name="name" placeholder="Type name" required>
         <button type="submit"> Request</button>
         <a href="/">Back</a>
+=======
+        <input type="text" name="name" placeholder="Your Name" required>
+        <button type="submit">Request</button>
+>>>>>>> 21a39c91022196cc5b89da8e1c6ab6bfdd36508b
       </form>
     </li>
   </ul>
