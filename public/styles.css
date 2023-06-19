@@ -19,8 +19,8 @@ body {
   
   nav {
     text-align: center;
-    width:250px;
-    height: 250px;
+    width:500px;
+    height: 700px;
     margin:0;
     position:absolute;
     top:50%;
@@ -40,16 +40,7 @@ body {
   ul {
     list-style-type: none;
     padding: 0;
-    text-align: center;
-    width:400px;
-    height: 400px;
-    margin:0;
-    position:absolute;
-    top:30%;
-    left:50%;
-    -ms-transform:translate(-50%, -50%);
-    transform:translate(-50%, -50%);
-
+    
   }
   
   li {
@@ -58,6 +49,8 @@ body {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    
   }
   
   li b {
@@ -66,6 +59,15 @@ body {
   
   form {
     margin-top: 10px;
+    text-align: center;
+    width:400px;
+    height: 400px;
+    margin:0;
+    position:absolute;
+    top:50%;
+    left:50%;
+    -ms-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
   }
   
   input[type="text"],
@@ -94,4 +96,19 @@ body {
   .error {
     color: red;
     margin-top: 10px;
+  }
+
+  .container {
+    height: 200px;
+    position: relative;
+    border: 3px solid rgb(0, 0, 0);
+  }
+
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
