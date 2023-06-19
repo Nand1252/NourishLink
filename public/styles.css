@@ -18,9 +18,16 @@ body {
   }
   
   nav {
-    background-color: #333;
-    padding: 10px;
     text-align: center;
+    width:250px;
+    height: 250px;
+    margin:0;
+    position:absolute;
+    top:50%;
+    left:50%;
+    -ms-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+
   }
   
   nav a {
@@ -33,6 +40,16 @@ body {
   ul {
     list-style-type: none;
     padding: 0;
+    text-align: center;
+    width:400px;
+    height: 400px;
+    margin:0;
+    position:absolute;
+    top:30%;
+    left:50%;
+    -ms-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+
   }
   
   li {
