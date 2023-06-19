@@ -1,34 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Browse Food Items</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const foodItemsList = document.getElementById('foodItemsList');
+
+    const updateFoodItemsList = (data) => {
+      foodItemsList.innerHTML = '';
+      data.forEach(foodItem => {
+        const itemElement = document.createElement('li');
+        itemElement.innerHTML = `<b>Title:</b> ${foodItem.title}<br><b>Description:</b> ${foodItem.description}<br><b>Quantity:</b> ${foodItem.quantity}`;
+        foodItemsList.appendChild(itemElement);
+      });
+    };
+
+    // Handle socket event for new food item
+    socket.on('newFoodItem', (newFoodItem) => {
+      fetch('/food-items')
+        .then(response => response.json())
+        .then(data => {
+          updateFoodItemsList(data);
+        });
+    });
+
+    fetch('/food-items')
+      .then(response => response.json())
+      .then(data => {
+        updateFoodItemsList(data);
+      });
+  });
+</script>
 </head>
 <body>
-  <h1>Browse Food Items</h1>
-  <ul>
-    <!-- Use server-side templating or JavaScript to dynamically generate the list of food items -->
-    <li>
-      <b>Title:</b> Item 1<br>
-      <b>Description:</b> Item 1 description<br>
-      <b>Quantity:</b> 10<br>
-      <form action="/request/item1" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <button type="submit">Request</button>
-      </form>
-    </li>
-    <li>
-      <b>Title:</b> Item 2<br>
-      <b>Description:</b> Item 2 description<br>
-      <b>Quantity:</b> 5<br>
-      <form action="/request/item2" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <button type="submit">Request</button>
-      </form>
-    </li>
-    <a href="/">Back</a>
-  </ul>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/browse">Browse</a>
+    <a href="/donate">Donate</a>
+  </nav>
+
+  <div class="container">
+    <h1>Browse Food Items</h1>
+    <ul id="foodItemsList"></ul>
+  </div>
 </body>
 </html>

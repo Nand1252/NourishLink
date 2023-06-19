@@ -1,11 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
+const socketIO = require('socket.io');
+const http = require('http');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+const server = http.createServer(app);
+
+const io = socketIO(server);
+app.set('io', io);
 
 // In-memory storage for food items
 const foodItems = [];
@@ -16,8 +23,8 @@ app.get('/', (req, res) => {
 });
 
 // Serve browse.html for browsing available food items
-app.get('/browse', (req, res) => {
-  res.sendFile(__dirname + '/public/browse.html');
+app.get('/food-items', (req, res) => {
+  res.json(foodItems);
 });
 
 // Serve donate.html for donating a food item
@@ -54,10 +61,13 @@ app.post('/donate', (req, res) => {
 
   foodItems.push(newFoodItem);
 
+  // Emit an event to notify clients about the new food item
+  const io = req.app.get('io');
+  io.emit('newFoodItem', newFoodItem);
+
   res.send(`
     <h2>Food item donated successfully!</h2>
     <p>ID: ${id}</p>
-    <a href="/">Back</a>
   `);
 });
 
