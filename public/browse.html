@@ -3,67 +3,44 @@
 <head>
   <title>Browse Food Items</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const foodItemsList = document.getElementById('foodItemsList');
-
-    const updateFoodItemsList = (data) => {
-      foodItemsList.innerHTML = '';
-      data.forEach(foodItem => {
-        const itemElement = document.createElement('li');
-        itemElement.innerHTML = `<b>Title:</b> ${foodItem.title}<br><b>Description:</b> ${foodItem.description}<br><b>Quantity:</b> ${foodItem.quantity}`;
-        foodItemsList.appendChild(itemElement);
-      });
-    };
-
-    // Handle socket event for new food item
-    socket.on('newFoodItem', (newFoodItem) => {
-      fetch('/food-items')
-        .then(response => response.json())
-        .then(data => {
-          updateFoodItemsList(data);
-        });
-    });
-
-    fetch('/food-items')
-      .then(response => response.json())
-      .then(data => {
-        updateFoodItemsList(data);
-      });
-  });
-</script>
 </head>
 <body>
-  <h1>Browse Food Items</h1>
-  <ul>
-    <li>
-      <div class="container">
-        <div class="center">
-      <b>Title:</b> Item 1<br>
-      <b>Description:</b> Item 1 description<br>
-      <b>Quantity:</b> 10<br>
-    </li>
-    <form action="/request/item2" method="POST"></form>
-    <input type="text" name="name" placeholder="Type name" required>
-  <button type="submit"> Request</button>
-  </form>
-    <li>
-      <div class="container">
-        <div class="center">
-      <b>Title:</b> Item 2<br>
-      <b>Description:</b> Item 2 description<br>
-      <b>Quantity:</b> 5<br>
-    </li>
-  </form>
-  </ul>
-  <form action="/request/item2" method="POST"></form>
-    <input type="text" name="name" placeholder="Type name" required>
-  <button type="submit"> Request</button>
-</div>
-</div>
-<a href="/">Click To Go Back</a>
+  <div id="container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    axios.get('/food-items')
+      .then(response => {
+        var jsonData = response.data;
+
+        console.log(jsonData);
+
+        let container = document.getElementById("container");
+        let table = document.createElement("table");
+        let cols = Object.keys(jsonData[0]);
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+        cols.forEach((item) => {
+          let th = document.createElement("th");
+          th.innerText = item;
+          tr.appendChild(th);
+        });
+        thead.appendChild(tr);
+        table.append(tr)
+
+        jsonData.forEach((item) => {
+          let tr = document.createElement("tr");
+
+          let vals = Object.values(item);
+
+          vals.forEach((elem) => {
+            let td = document.createElement("td");
+            td.innerText = elem;
+            tr.appendChild(td);
+          });
+          table.appendChild(tr);
+        });
+        container.appendChild(table)
+            })
+  </script>
 </body>
 </html>
