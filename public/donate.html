@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Donate Food Item</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="./script.js"></script>
 </head>
 <body>
   <h1>Donate Food Item</h1>
-  <form action="/donate" method="POST">
+  <form action="/donate" method="POST" id="donateForm">
     <div class="container">
       <div class="center">
     <input type="text" name="title" style = "width:200px" set placeholder="Name of food item" required><br>
@@ -16,6 +17,9 @@
     <input type="number"  name="quantity" placeholder="Quantity" required><br>
     <button type="submit">Donate</button> 
     <a href="/">Click To Go Back</a>
+    <div id="thankYouMessage" class="thank-you-message">
+      Thank you for your donation!
+    </div>
       </div>
     </div>
   </form>

@@ -24,7 +24,36 @@ app.get('/', (req, res) => {
 
 // Serve browse.html for browsing available food items
 app.get('/food-items', (req, res) => {
-  res.json(foodItems);
+  res.send(`
+    <div id="container"></div>
+    <script>
+    //let jsonData = foodItems;
+
+    let container = document.getElementById("container");
+    let table = document.createElement("table");
+    let cols = Object.keys(jsonData[0]);
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    cols.forEach((item) => {
+      let th = document.createElement("th");
+      th.innerText = item;
+      tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    table.append(tr)
+    jsonData.forEach((item) => {
+      let tr = document.createElement("tr");
+      let vals = Object.values(item);
+      vals.forEach((elem) => {
+        let td = document.createElement("td");
+        td.innerText = elem;
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+    container.appendChild(table)
+  </script>
+  `)
 });
 
 // Serve donate.html for donating a food item
@@ -64,11 +93,7 @@ app.post('/donate', (req, res) => {
   // Emit an event to notify clients about the new food item
   const io = req.app.get('io');
   io.emit('newFoodItem', newFoodItem);
-
-  res.send(`
-    <h2>Food item donated successfully!</h2>
-    <p>ID: ${id}</p>
-  `);
+  res.sendFile(__dirname + '/public/donate.html');
 });
 
 // API endpoint to request a food item
