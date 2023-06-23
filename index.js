@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const socketIO = require('socket.io');
 const http = require('http');
+const fs = require('fs');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,46 +15,25 @@ const server = http.createServer(app);
 const io = socketIO(server);
 app.set('io', io);
 
+let foodListHtml = fs.readFileSync('./public/browse.html', 'utf8');
+
 // In-memory storage for food items
 const foodItems = [];
+
+const generateFoodHtmlArray = () => {
+  return foodItems.map((item) => {
+    let output = foodListHtml.replace('{{%TITLE%}}', item.title);
+    output = output.replace('{{%DESCRIPTION%}}', item.description);
+    output = output.replace('{{%QUANTITY%}}', item.quantity);
+    output = output.replace('{{%STATUS%}}', item.status);
+  
+    return output;
+  });
+};
 
 // Serve index.html as the home page
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
-});
-
-// Serve browse.html for browsing available food items
-app.get('/food-items', (req, res) => {
-  res.send(`
-    <div id="container"></div>
-    <script>
-    //let jsonData = foodItems;
-
-    let container = document.getElementById("container");
-    let table = document.createElement("table");
-    let cols = Object.keys(jsonData[0]);
-    let thead = document.createElement("thead");
-    let tr = document.createElement("tr");
-    cols.forEach((item) => {
-      let th = document.createElement("th");
-      th.innerText = item;
-      tr.appendChild(th);
-    });
-    thead.appendChild(tr);
-    table.append(tr)
-    jsonData.forEach((item) => {
-      let tr = document.createElement("tr");
-      let vals = Object.values(item);
-      vals.forEach((elem) => {
-        let td = document.createElement("td");
-        td.innerText = elem;
-        tr.appendChild(td);
-      });
-      table.appendChild(tr);
-    });
-    container.appendChild(table)
-  </script>
-  `)
 });
 
 // Serve donate.html for donating a food item
@@ -84,11 +64,20 @@ app.post('/donate', (req, res) => {
     title,
     description,
     quantity,
-    status: 'available',
-    createdAt: new Date(),
+    status: 'available'
   };
 
   foodItems.push(newFoodItem);
+
+  const foodHtmlArray = generateFoodHtmlArray();
+
+  fs.truncate('./public/data.json', 0, (err) => {
+    if (err) throw err;
+  })
+
+  fs.writeFile('./public/data.json', JSON.stringify(newFoodItem, null, 2), (err) => {
+    if (err) throw err;
+  });
 
   // Emit an event to notify clients about the new food item
   const io = req.app.get('io');
@@ -119,7 +108,12 @@ app.post('/request/:id', (req, res) => {
   }
 });
 
-// ...
+// Serve browse.html for browsing available food items
+app.get('/food-items', (req, res) => {
+  const foodHtmlArray = generateFoodHtmlArray();
+
+  res.send(foodHtmlArray.join(''));
+});
 
 // Start the server
 app.listen(3000, () => {

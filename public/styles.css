@@ -114,3 +114,35 @@ body {
   .thank-you-message {
     display: none;
   }
+  .item-box {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px;
+  }
+  
+  .item-title {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .item-description {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  
+  .item-quantity {
+    margin-top: 10px;
+  }
+  
+  .item-status {
+    margin-top: 10px;
+  }
+  
+  .name-input {
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    margin-top: 10px;
+  }

@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Browse Food Items</title>
+  <title>Item Details</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="container"></div>
-  <script src="/socket.io/index.js"></script>
-  <script src="./script.js"></script>
-  <table id="foodItemsTable">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="item-box">
+    <div class="item-title">{{%TITLE%}}</div>
+    <div class="item-description">{{%DESCRIPTION%}}</div>
+    <div class="item-quantity">{{%QUANTITY%}}</div>
+    <div class="item-status">{{%STATUS%}}</div>
+    
+    <div>
+      <input type="text" class="name-input" placeholder="Enter your name">
+      <button class="submit-button">Submit</button>
+    </div>
+  </div>
 </body>
 </html>
