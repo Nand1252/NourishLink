@@ -3,6 +3,20 @@
 <head>
   <title>Item Details</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    function handleSubmit() {
+      const nameInput = document.getElementById('nameInput');
+      const name = nameInput.value;
+      const messageElement = document.getElementById('message');
+      
+      if (name) {
+        const message = `Thank you, ${name}! Your submission has been received.`;
+        messageElement.textContent = message;
+      } else {
+        messageElement.textContent = 'Please enter your name.';
+      }
+    }
+  </script>
 </head>
 <body>
   <div class="item-box">
@@ -12,9 +26,11 @@
     <div class="item-status">{{%STATUS%}}</div>
     
     <div>
-      <input type="text" class="name-input" placeholder="Enter your name">
-      <button class="submit-button">Submit</button>
+      <input type="text" id="nameInput" class="name-input" placeholder="Enter your name">
+      <button class="submit-button" onclick="handleSubmit()">Submit</button>
     </div>
+    
+    <div id="message" class="message"></div>
   </div>
 </body>
 </html>
