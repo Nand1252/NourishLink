@@ -5,11 +5,7 @@ body {
     background-color: #f2f2f2;
   }
   
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+
   
   h1 {
     text-align: center;
@@ -98,19 +94,17 @@ body {
   }
 
   .container {
-    height: 200px;
-    position: relative;
-    border: 3px solid rgb(0, 0, 0);
-  }
-
-  .center {
-    margin: 0;
+    text-align: center;
+    border: 10px solid black;
+    width: 800px;
+    height: 700px;
     position: absolute;
     top: 50%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    padding: 10px;
   }
+
   .thank-you-message {
     display: none;
   }
