@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
+    background-image: url(kidpic.jpg);
+    background-size: 2000px;
   }
   
 
@@ -10,7 +11,13 @@ body {
   h1 {
     text-align: center;
     padding: 20px;
-    color: #333;
+    color: #97b093;
+  }
+
+  .subtitle {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
   }
 
   
@@ -18,12 +25,10 @@ body {
     text-align: center;
     width:500px;
     height: 700px;
-    margin:0;
-    position:absolute;
-    top:50%;
-    left:50%;
-    -ms-transform:translate(-50%, -50%);
-    transform:translate(-50%, -50%);
+    margin: auto;
+    position: relative;
+    bottom: 0%;
+    align-items: center;
 
   }
   
@@ -32,6 +37,7 @@ body {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
+    block-size: 100px;
   }
   
   ul {
@@ -96,10 +102,12 @@ body {
 
   .container {
     text-align: center;
-    border: 10px solid black;
+    border: 10px solid white;
+    margin: auto;
+    vertical-align: middle;
     width: 800px;
-    height: 700px;
-    position: absolute;
+    height: 300px;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -110,6 +118,7 @@ body {
     display: none;
   }
   .item-box {
+    color: white;
     width: 300px;
     padding: 20px;
     border: 1px solid #ccc;
@@ -136,6 +145,7 @@ body {
   
   .name-input {
     margin-top: 20px;
+    width: 350px;
   }
   
   .submit-button {
